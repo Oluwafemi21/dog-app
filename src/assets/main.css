@@ -3,3 +3,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+header {
+    @apply bg-white shadow-sm py-4 dark:bg-darkElement
+}
+
+.container {
+    @apply mx-auto px-4 max-w-[1440px] w-11/12
+}
+
+nav {
+    @apply flex items-center justify-between flex-wrap
+}
+
+
+.search {
+    @apply text-sm md:text-base min-w-full sm:min-w-[375px] bg-white shadow rounded flex items-center px-6 gap-3 focus-within:ring-2 focus-within:ring-black dark:bg-darkElement dark:text-white dark:focus-within:ring-white hover:ring-2 dark:hover:ring-white hover:ring-black
+}
+
+.search input {
+    @apply py-2.5 w-full md:min-w-[375px] focus:outline-none text-lightInput dark:text-white bg-inherit
+}
+
+html,
+body {
+  width: 100vw;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #d6d6d6;
+  background: #f2f2f2;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 24px;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 4px;
+  background-color: #d6d6d6;
+  border-radius: 24px;
+}
+
+#app {
+  @apply bg-lightGrey dark:text-white dark:bg-darkModeBg flex flex-col min-h-screen w-full
+}

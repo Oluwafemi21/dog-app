@@ -1,22 +1,24 @@
-<script setup></script>
-
 <template>
     <header>
-        <img
-            alt="Vue logo"
-            class="logo"
-            src="@/assets/logo.svg"
-            width="125"
-            height="125"
-        />
-
-        <div class="wrapper">
-            <HelloWorld msg="You did it!" />
-
+        <div class="container">
             <nav>
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
+                <router-link :to="{ name: 'home' }">
+                    <h1
+                        class="font-bold text-darkBlue dark:text-white md:text-2xl text-base"
+                    >
+                        Find a dog for your home
+                    </h1>
+                </router-link>
+                <theme-toggler />
             </nav>
         </div>
     </header>
 </template>
+
+<script>
+import ThemeToggler from "./ThemeToggler.vue";
+
+export default {
+    components: { ThemeToggler },
+};
+</script>
