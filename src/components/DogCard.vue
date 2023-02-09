@@ -8,15 +8,17 @@
                 :key="index"
                 class="bg-white dark:bg-darkElement rounded shadow group relative"
             >
-                <img
-                    class="w-full h-60 sm:h-52 object-cover rounded"
-                    :src="dog"
-                    :alt="
-                        dog.split('/')[4].charAt(0).toUpperCase() +
-                        dog.split('/')[4].slice(1)
-                    "
-                    loading="lazy"
-                />
+                <router-link :to="'/dog/' + dog.split('/')[4] + '/' + index">
+                    <img
+                        class="w-full h-60 sm:h-52 object-cover rounded"
+                        :src="dog"
+                        :alt="
+                            dog.split('/')[4].charAt(0).toUpperCase() +
+                            dog.split('/')[4].slice(1)
+                        "
+                        loading="lazy"
+                    />
+                </router-link>
                 <p
                     class="rounded-t absolute inset-0 h-16 flex items-center justify-center -translate-y-0 opacity-0 w-full bg-black text-white py-3 group-hover:translate-y-0 group-hover:opacity-80 transition-all duration-200"
                 >

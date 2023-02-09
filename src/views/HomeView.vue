@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapState } from "vuex";
 import DogCard from "@/components/DogCard.vue";
 import Preloader from "@/components/Preloader.vue";
 import axios from "axios";
@@ -59,11 +60,11 @@ export default {
         return {
             breed: "",
             searchResult: "",
-            dogs: [],
             loading: false,
         };
     },
     methods: {
+        ...mapActions(["fetchDogs", "searchDogs", "errorInSearch"]),
         async searchDog() {
             this.loading = true;
             try {
@@ -74,10 +75,9 @@ export default {
                     `https://dog.ceo/api/breed/${this.breed}/images/random/50`
                 );
 
-                this.dogs = response1.data.message.concat(
-                    response2.data.message
+                this.searchDogs(
+                    response1.data.message.concat(response2.data.message)
                 );
-
                 this.loading = false;
                 this.searchResult = `Search results for "${this.breed}" :`;
             } catch (error) {
@@ -88,6 +88,10 @@ export default {
             }
         },
     },
+    computed: {
+        ...mapGetters(["getDogs"]),
+        ...mapState(["dogs"]),
+    },
     async created() {
         try {
             let response1 = await axios.get(
@@ -97,7 +101,7 @@ export default {
                 "https://dog.ceo/api/breeds/image/random/50"
             );
             const data = response1.data.message.concat(response2.data.message);
-            this.dogs = data;
+            this.fetchDogs(data);
             this.loading = false;
         } catch (error) {
             console.log(error);
