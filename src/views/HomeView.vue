@@ -40,7 +40,7 @@
                 </p>
                 <dog-card :dogs="dogs" />
             </template>
-            <p v-else>Loading...</p>
+            <preloader v-else />
 
             <p v-show="!dogs.length">{{ searchResult }}</p>
         </div>
@@ -49,11 +49,12 @@
 
 <script>
 import DogCard from "@/components/DogCard.vue";
+import Preloader from "@/components/Preloader.vue";
 import axios from "axios";
 
 export default {
     name: "HomeView",
-    components: { DogCard },
+    components: { DogCard, Preloader },
     data() {
         return {
             breed: "",
