@@ -100,7 +100,8 @@ export default {
         ...mapState(["dogs"]),
     },
     async created() {
-        if (dogs.length) {
+        console.log(this.dogs);
+        if (!this.dogs.length) {
             try {
                 let response1 = await axios.get(
                     "https://dog.ceo/api/breeds/image/random/50"
