@@ -40,9 +40,13 @@
                 </p>
                 <dog-card :dogs="dogs" />
             </template>
-            <preloader v-else />
-
-            <p v-show="!dogs.length">{{ searchResult }}</p>
+            <preloader v-show="loading" />
+            <div v-show="!dogs.length">
+                <p>{{ searchResult }}</p>
+                <p class="h-[55vh] grid place-content-center text-xl">
+                    No results found. Please try again.
+                </p>
+            </div>
         </div>
     </section>
 </template>
@@ -60,13 +64,14 @@ export default {
         return {
             breed: "",
             searchResult: "",
-            loading: false,
+            loading: true,
         };
     },
     methods: {
         ...mapActions(["fetchDogs", "searchDogs", "errorInSearch"]),
         async searchDog() {
             this.loading = true;
+
             try {
                 let response1 = await axios.get(
                     `https://dog.ceo/api/breed/${this.breed}/images/random/50`
@@ -79,11 +84,11 @@ export default {
                     response1.data.message.concat(response2.data.message)
                 );
                 this.loading = false;
-                this.searchResult = `Search results for "${this.breed}" :`;
+                this.searchResult = `Search results for "${this.breed}": `;
             } catch (error) {
                 this.loading = false;
                 console.log(error);
-                this.searchResult = `No results found for "${this.breed}".`;
+                this.searchResult = `No results for "${this.breed}".`;
                 this.errorInSearch([]);
             }
         },
@@ -93,18 +98,22 @@ export default {
         ...mapState(["dogs"]),
     },
     async created() {
-        try {
-            let response1 = await axios.get(
-                "https://dog.ceo/api/breeds/image/random/50"
-            );
-            let response2 = await axios.get(
-                "https://dog.ceo/api/breeds/image/random/50"
-            );
-            const data = response1.data.message.concat(response2.data.message);
-            this.fetchDogs(data);
-            this.loading = false;
-        } catch (error) {
-            console.log(error);
+        if (dogs.length) {
+            try {
+                let response1 = await axios.get(
+                    "https://dog.ceo/api/breeds/image/random/50"
+                );
+                let response2 = await axios.get(
+                    "https://dog.ceo/api/breeds/image/random/50"
+                );
+                const data = response1.data.message.concat(
+                    response2.data.message
+                );
+                this.fetchDogs(data);
+                this.loading = false;
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
 };
