@@ -40,13 +40,15 @@
                 </p>
                 <dog-card :dogs="dogs" />
             </template>
-            <preloader v-show="loading" />
-            <div v-show="!dogs.length">
-                <p>{{ searchResult }}</p>
-                <p class="h-[55vh] grid place-content-center text-xl">
-                    No results found. Please try again.
-                </p>
-            </div>
+            <template v-else>
+                <preloader v-if="loading" />
+                <div v-else>
+                    <p>{{ searchResult }}</p>
+                    <p class="h-[55vh] grid place-content-center text-xl">
+                        No results found. Please try again.
+                    </p>
+                </div>
+            </template>
         </div>
     </section>
 </template>
@@ -112,6 +114,7 @@ export default {
                 this.fetchDogs(data);
                 this.loading = false;
             } catch (error) {
+                this.loading = false;
                 console.log(error);
             }
         }
